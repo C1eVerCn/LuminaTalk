@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuminaTalk V3.0 High-Fidelity Prototype</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --bg-dark: #050505;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: #FFFFFF;
+            margin: 0;
+            padding: 40px;
+        }
+        .artboard {
+            width: 1280px;
+            height: 800px;
+            background: #050505;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 100px;
+            border: 1px solid #1a1a1a;
+            box-shadow: 0 50px 100px -20px rgba(0,0,0,0.5);
+            border-radius: 8px;
+        }
+        /* 这里的液态背景是全局动态的 */
+        .mesh-gradient {
+            position: absolute;
+            width: 140%;
+            height: 140%;
+            top: -20%;
+            left: -20%;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(20,20,20,1) 0, transparent 50%),
+                radial-gradient(at 50% 0%, rgba(30,30,30,1) 0, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(15,15,15,1) 0, transparent 50%);
+            filter: blur(80px);
+            z-index: 0;
+            animation: rotate 30s linear infinite;
+        }
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .glass {
+            background: var(--glass);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border);
+        }
+        .liquid-orb {
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.2), rgba(255,255,255,0.05));
+            box-shadow: 0 0 60px rgba(255,255,255,0.1), inset 0 0 40px rgba(255,255,255,0.05);
+            animation: orb-breathe 4s ease-in-out infinite;
+        }
+        @keyframes orb-breathe {
+            0%, 100% { transform: scale(1); filter: blur(2px); }
+            50% { transform: scale(1.1); filter: blur(5px); }
+        }
+        .text-glow {
+            text-shadow: 0 0 20px rgba(255,255,255,0.3);
+        }
+        .grayscale-filter {
+            filter: grayscale(100%) contrast(110%) brightness(80%);
+            transition: all 0.5s ease;
+        }
+        .grayscale-filter:hover {
+            filter: grayscale(0%) contrast(100%) brightness(90%);
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center">
+
+    <!-- SCREEN 1: WELCOME & MOTIVATION -->
+    <div class="artboard" id="screen-1">
+        <div class="mesh-gradient"></div>
+        <div class="relative z-10 h-full flex flex-col px-20 py-12">
+            <nav class="flex justify-between items-center mb-24">
+                <div class="text-2xl font-bold tracking-tighter uppercase">LuminaTalk</div>
+                <div class="text-xs tracking-[0.3em] text-gray-500 uppercase">Est. 2024</div>
+            </nav>
+            <div class="grid grid-cols-2 gap-20 items-center mt-12">
+                <div>
+                    <span class="text-xs uppercase tracking-widest text-gray-500 mb-6 block">Daily Inspiration</span>
+                    <h1 class="text-6xl font-light leading-tight mb-8">Words are the <br/><span class="font-semibold italic">mirrors</span> of the mind.</h1>
+                    <p class="text-gray-400 text-lg max-w-md leading-relaxed border-l border-gray-800 pl-6">
+                        "Your current limit is just a starting point for tomorrow's conversation."
+                    </p>
+                    <div class="mt-12 flex items-center space-x-4">
+                        <div class="flex -space-x-2">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" class="w-8 h-8 rounded-full border border-black object-cover">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" class="w-8 h-8 rounded-full border border-black object-cover">
+                        </div>
+                        <span class="text-xs text-gray-500">Join 12,402 learners today</span>
+                    </div>
+                </div>
+                <div class="glass p-10 rounded-[2.5rem] shadow-2xl">
+                    <h2 class="text-2xl font-semibold mb-8">Sign In</h2>
+                    <div class="space-y-5">
+                        <div class="group">
+                            <label class="text-[10px] uppercase tracking-widest text-gray-500 ml-1 mb-2 block">Account</label>
+                            <input type="text" placeholder="Email / Username" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 outline-none focus:border-white/30 transition-all">
+                        </div>
+                        <div class="group">
+                            <label class="text-[10px] uppercase tracking-widest text-gray-500 ml-1 mb-2 block">Password</label>
+                            <input type="password" placeholder="••••••••" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 outline-none focus:border-white/30 transition-all">
+                        </div>
+                        <button class="w-full bg-white text-black font-bold py-5 rounded-2xl mt-4 hover:bg-gray-200 transition-all shadow-lg shadow-white/5">
+                            Start Journey
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCREEN 2: SYSTEMIC MODE HUB -->
+    <div class="artboard" id="screen-2">
+        <div class="mesh-gradient" style="animation-delay: -5s;"></div>
+        <div class="relative z-10 h-full px-20 py-16">
+            <header class="flex justify-between items-end mb-16">
+                <div>
+                    <h2 class="text-4xl font-bold tracking-tight mb-2">Training Hub</h2>
+                    <p class="text-gray-500">Welcome back, <span class="text-white">Alexander</span>. Ready for your 7.5 target?</p>
+                </div>
+                <div class="flex space-x-3">
+                    <div class="glass px-4 py-2 rounded-xl flex items-center space-x-2">
+                        <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                        <span class="text-xs font-medium">AI Coach Online</span>
+                    </div>
+                </div>
+            </header>
+            
+            <div class="grid grid-cols-2 gap-10">
+                <!-- IELTS Mastery -->
+                <div class="glass rounded-[3rem] p-12 group hover:bg-white/[0.06] transition-all cursor-pointer border-white/20">
+                    <div class="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center mb-8">
+                        <i class="fa-solid fa-trophy text-2xl"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-4">IELTS Examiner</h3>
+                    <p class="text-gray-400 mb-10 leading-relaxed">Systematic mock tests for Part 1, 2, & 3 with official scoring criteria.</p>
+                    <div class="space-y-4 mb-10">
+                        <div class="flex justify-between text-xs">
+                            <span class="text-gray-500 italic">Progress to Goal</span>
+                            <span class="text-white">68%</span>
+                        </div>
+                        <div class="w-full h-[2px] bg-white/10">
+                            <div class="w-[68%] h-full bg-white shadow-[0_0_10px_white]"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center text-sm font-semibold group-hover:gap-4 gap-2 transition-all">
+                        ENTER PATHWAY <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+                
+                <!-- Daily Practice -->
+                <div class="glass rounded-[3rem] p-12 group hover:bg-white/[0.06] transition-all cursor-pointer">
+                    <div class="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center mb-8">
+                        <i class="fa-solid fa-street-view text-2xl"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-4">Real-world Context</h3>
+                    <p class="text-gray-400 mb-10 leading-relaxed">Immersive survival English for coffee shops, taxis, and business social.</p>
+                    <div class="flex gap-3 mb-10">
+                        <div class="px-4 py-1.5 rounded-full border border-white/10 text-[10px] uppercase font-bold tracking-widest text-gray-400">12 Scenarios</div>
+                        <div class="px-4 py-1.5 rounded-full border border-white/10 text-[10px] uppercase font-bold tracking-widest text-gray-400">Slang Mode</div>
+                    </div>
+                    <div class="flex items-center text-sm font-semibold group-hover:gap-4 gap-2 transition-all">
+                        BROWSE MAP <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCREEN 3: IELTS CONFIG & ROADMAP -->
+    <div class="artboard" id="screen-3">
+        <div class="mesh-gradient" style="animation-delay: -10s;"></div>
+        <div class="relative z-10 h-full p-20">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center space-x-4 mb-12">
+                    <button class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all">
+                        <i class="fa-solid fa-arrow-left text-sm"></i>
+                    </button>
+                    <h2 class="text-2xl font-semibold">IELTS Pathway Configuration</h2>
+                </div>
+
+                <!-- Step Roadmap -->
+                <div class="flex justify-between items-start mb-20 relative">
+                    <div class="absolute top-6 left-0 w-full h-[1px] bg-white/10 -z-0"></div>
+                    <div class="z-10 text-center flex flex-col items-center">
+                        <div class="w-12 h-12 rounded-full glass border-white/40 flex items-center justify-center mb-4 bg-white text-black font-bold">1</div>
+                        <span class="text-xs font-bold uppercase tracking-widest">Part 1</span>
+                        <span class="text-[10px] text-gray-500 mt-1">Introduction</span>
+                    </div>
+                    <div class="z-10 text-center flex flex-col items-center opacity-40">
+                        <div class="w-12 h-12 rounded-full glass border-white/10 flex items-center justify-center mb-4 font-bold">2</div>
+                        <span class="text-xs font-bold uppercase tracking-widest">Part 2</span>
+                        <span class="text-[10px] text-gray-500 mt-1">Cue Card</span>
+                    </div>
+                    <div class="z-10 text-center flex flex-col items-center opacity-40">
+                        <div class="w-12 h-12 rounded-full glass border-white/10 flex items-center justify-center mb-4 font-bold">3</div>
+                        <span class="text-xs font-bold uppercase tracking-widest">Part 3</span>
+                        <span class="text-[10px] text-gray-500 mt-1">Discussion</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-8 mb-12">
+                    <div class="col-span-2 glass rounded-3xl p-8">
+                        <h4 class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-6">Current Focus: P1 Warm-up</h4>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="p-5 rounded-2xl bg-white text-black">
+                                <i class="fa-solid fa-house mb-4 block"></i>
+                                <div class="font-bold">Hometown</div>
+                                <div class="text-[10px] opacity-60 mt-1">12 Questions • High Frequency</div>
+                            </div>
+                            <div class="p-5 rounded-2xl border border-white/10 hover:border-white/30 cursor-pointer transition-all">
+                                <i class="fa-solid fa-briefcase mb-4 block text-gray-500"></i>
+                                <div class="font-bold">Work & Study</div>
+                                <div class="text-[10px] text-gray-500 mt-1">8 Questions • Standard</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass rounded-3xl p-8 flex flex-col">
+                        <h4 class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-6">AI Setting</h4>
+                        <div class="space-y-6 flex-grow">
+                            <div>
+                                <div class="text-[10px] text-gray-400 mb-2 uppercase">Accent</div>
+                                <div class="flex justify-between items-center text-sm font-bold">
+                                    British (RP) <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="text-[10px] text-gray-400 mb-2 uppercase">Duration</div>
+                                <div class="flex justify-between items-center text-sm font-bold">
+                                    10 Minutes <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="w-full bg-white/10 hover:bg-white hover:text-black py-4 rounded-xl text-xs font-bold tracking-widest transition-all">
+                            GO LIVE
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCREEN 4: ACTIVE SESSION -->
+    <div class="artboard" id="screen-4">
+        <div class="mesh-gradient" style="background: radial-gradient(at 50% 50%, rgba(10,10,10,1) 0, #000 100%);"></div>
+        <div class="relative z-10 h-full flex flex-col items-center justify-between py-20">
+            <div class="text-center">
+                <div class="text-[10px] uppercase tracking-[0.5em] text-gray-500 mb-4">IELTS Part 1 • Hometown</div>
+                <h3 class="text-3xl font-light italic">"Could you describe the place where you grew up?"</h3>
+            </div>
+
+            <!-- The Liquid Orb Container -->
+            <div class="relative">
+                <div class="w-64 h-64 rounded-full liquid-orb flex items-center justify-center">
+                    <!-- Dynamic Waveform Placeholder -->
+                    <div class="flex items-end space-x-1 h-12">
+                        <div class="w-1 bg-white/40 h-4 animate-pulse"></div>
+                        <div class="w-1 bg-white/60 h-8 animate-pulse" style="animation-delay: 0.1s"></div>
+                        <div class="w-1 bg-white/80 h-12 animate-pulse" style="animation-delay: 0.2s"></div>
+                        <div class="w-1 bg-white/60 h-6 animate-pulse" style="animation-delay: 0.3s"></div>
+                        <div class="w-1 bg-white/40 h-10 animate-pulse" style="animation-delay: 0.4s"></div>
+                    </div>
+                </div>
+                <!-- Peripheral Glow -->
+                <div class="absolute -inset-10 bg-white/5 blur-[100px] -z-10 rounded-full"></div>
+            </div>
+
+            <div class="flex flex-col items-center">
+                <div class="text-[10px] uppercase tracking-widest text-gray-500 mb-8 font-bold">AI is listening...</div>
+                <div class="flex items-center space-x-12">
+                    <button class="w-16 h-16 rounded-full glass flex items-center justify-center text-xl hover:bg-white/10 transition-all">
+                        <i class="fa-solid fa-pause"></i>
+                    </button>
+                    <div class="text-center">
+                        <div class="text-4xl font-light font-mono">04:12</div>
+                        <div class="text-[10px] text-gray-600 font-bold tracking-tighter mt-1 uppercase">Elapsed Time</div>
+                    </div>
+                    <button class="w-16 h-16 rounded-full glass flex items-center justify-center text-xl text-red-500 hover:bg-red-500/10 transition-all">
+                        <i class="fa-solid fa-stop"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCREEN 5: FEEDBACK REPORT -->
+    <div class="artboard" id="screen-5">
+        <div class="mesh-gradient" style="animation-delay: -15s;"></div>
+        <div class="relative z-10 h-full overflow-y-auto px-20 py-16 custom-scrollbar">
+            <div class="flex justify-between items-start mb-16">
+                <div>
+                    <h2 class="text-5xl font-bold tracking-tighter mb-4 text-glow">Practice Insight</h2>
+                    <div class="flex space-x-4 text-[10px] uppercase font-bold tracking-widest text-gray-500">
+                        <span>Session #204</span>
+                        <span>•</span>
+                        <span>Focus: Fluency & Coherence</span>
+                    </div>
+                </div>
+                <div class="glass p-8 rounded-[2.5rem] flex flex-col items-center">
+                    <div class="text-6xl font-black mb-2 tracking-tighter">7.5</div>
+                    <div class="text-[10px] uppercase tracking-widest text-gray-500">Overall Band</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-8 mb-12">
+                <div class="col-span-2 space-y-8">
+                    <!-- Polished View -->
+                    <div class="glass rounded-3xl p-8">
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-6">Polished Comparison</h4>
+                        <div class="space-y-6">
+                            <div class="p-6 rounded-2xl bg-white/5 border border-white/5">
+                                <div class="text-[10px] text-red-400 uppercase font-black mb-3 tracking-widest">You said:</div>
+                                <p class="text-gray-400 italic">"I live in a city which is <span class="text-red-400 underline underline-offset-4">very big</span> and has <span class="text-red-400 underline underline-offset-4">much</span> people..."</p>
+                            </div>
+                            <div class="p-6 rounded-2xl bg-white/[0.02] border border-white/10">
+                                <div class="text-[10px] text-green-400 uppercase font-black mb-3 tracking-widest">AI Suggestion (Band 8.0+):</div>
+                                <p class="text-gray-100">"I reside in a <span class="text-green-400 font-bold">bustling metropolis</span> which is <span class="text-green-400 font-bold">densely populated</span>..."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-8">
+                    <!-- Metrics Bar Chart -->
+                    <div class="glass rounded-3xl p-8">
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-8">Dimensions</h4>
+                        <div class="space-y-5">
+                            <div>
+                                <div class="flex justify-between text-[10px] uppercase font-bold mb-2"><span>Fluency</span><span>8.0</span></div>
+                                <div class="h-1 bg-white/10 rounded-full"><div class="h-full bg-white w-[88%]"></div></div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-[10px] uppercase font-bold mb-2"><span>Grammar</span><span>6.5</span></div>
+                                <div class="h-1 bg-white/10 rounded-full"><div class="h-full bg-white w-[72%]"></div></div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-[10px] uppercase font-bold mb-2"><span>Vocabulary</span><span>7.5</span></div>
+                                <div class="h-1 bg-white/10 rounded-full"><div class="h-full bg-white w-[83%]"></div></div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-[10px] uppercase font-bold mb-2"><span>Pronunciation</span><span>8.0</span></div>
+                                <div class="h-1 bg-white/10 rounded-full"><div class="h-full bg-white w-[88%]"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Memory Insight -->
+                    <div class="glass rounded-3xl p-8 bg-white/[0.05]">
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4">AI Memory Note</h4>
+                        <p class="text-xs text-gray-400 leading-relaxed italic">"Alexander, you've used 'basically' 6 times today. Try replacing it with 'fundamentally' or 'essentially' in tomorrow's session."</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex space-x-4">
+                <button class="bg-white text-black px-10 py-5 rounded-2xl font-bold text-sm tracking-widest hover:scale-105 transition-all">DOWNLOAD PDF REPORT</button>
+                <button class="glass px-10 py-5 rounded-2xl font-bold text-sm tracking-widest hover:bg-white/10 transition-all uppercase">Next Session: Part 2</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
